@@ -23,15 +23,22 @@ class DiseasePredictor:
             ['fever', 'cough', 'shortness of breath']
         ]
         y_train = ['Common Cold', 'Common Cold', 'Allergy', 'COVID-19']
+        # Clean up empty strings in the training data
+        X_train = [list(filter(None, symptoms)) for symptoms in X_train]
         X_train = self.mlb.fit_transform(X_train)
         model = DecisionTreeClassifier()
         model.fit(X_train, y_train)
         return model
 
     def get_input_symptoms(self):
-        self.symptoms = input("Enter your symptoms separated by commas: ").strip().lower().split(',')
+        symptoms_input = input("Enter your symptoms separated by commas (e.g., fever, cough): ").strip().lower()
+        # Split input into a list, remove extra spaces, and filter empty strings
+        self.symptoms = list(filter(None, symptoms_input.split(',')))
 
     def predict_disease(self):
+        if not self.symptoms:
+            return None
+        
         X_test = np.array([self.symptoms])
         X_test = self.mlb.transform(X_test)
         prediction = self.model.predict(X_test)
@@ -62,6 +69,6 @@ class DiseasePredictor:
             print("Error:", e)
 
 # Testing
-if __name__ == "__main__":
-    predictor = DiseasePredictor()
-    predictor.run()
+
+predictor = DiseasePredictor()
+predictor.run()
