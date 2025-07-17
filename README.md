@@ -24,7 +24,7 @@
 
 ## Requirements
 
-To run this project, you need Python 3.x. You can set up the necessary dependencies using the provided virtual environment (`venv`).
+To run this project, you need Python 3.x.
 
 ## Setup and Installation
 
